@@ -1,2 +1,2 @@
 # DiceGame
-Assignment Project for MedBridge
+Assignment Project
