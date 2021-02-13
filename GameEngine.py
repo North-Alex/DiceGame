@@ -19,8 +19,8 @@ class GameEngine:
                 roll {d_num} dice. Then you hold at least 1 die and re-roll
                 until all dice are held. Then all players take their turns
                 rolling. Every die held counts as its face value. {zero_arr}
-                die throws are counted as 0 points. The player with the lowest score
-                wins the game.
+                die throws are counted as 0 points. The player with the 
+                lowest score wins the game.
                 To play with a bot, start player's name with 'BOT', like 
                 'BOTZILLA' or "BOT 2547".
             """.format(
@@ -36,10 +36,13 @@ class GameEngine:
     def playGame(self):
         player_list = []
         for i in range(GameConfig().PLAYER_NUMBER):
-            player_list.append(Player(UserIO().promptPlayerName(i + 1, player_list)))
+            player_list.append(
+                Player(UserIO().promptPlayerName(i + 1, player_list))
+            )
         for round in range(GameConfig().ROUNDS):
             self.playRound(round, player_list)
-            player_list = player_list[1:] + [player_list[0]] #put the first player to the end
+            #first player starts last next round
+            player_list = player_list[1:] + [player_list[0]]
             
     def playRound(self, round_idx, player_list):
         print("\nStarting round {}. " \

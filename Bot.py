@@ -8,12 +8,15 @@ class Bot:
     
     def pickDice(self, dice):
         pick = []
+        #in case if bot is smart enough to pick no die on a bad throw
+        #it'll pick the smallest die number of them all
         smallest = {"pos": 0, "number": GameConfig().DIE_SIZE + 1}
         tolerance = GameConfig().DIE_SIZE * self.stupidity / 100
         if tolerance == 0:
             tolerance += 0.1
         
         for i in range(len(dice)):
+            #seriously stupid bot doesn't know about zeroes
             if self.stupidity < self.intellectual_threshold:
                 if dice[i] in GameConfig().ZERO_DICE:
                     dice[i] = 0
