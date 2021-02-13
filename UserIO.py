@@ -53,4 +53,35 @@ class UserIO:
             bottom_row += "‾‾‾ "
             hint_row += "-{}- ".format(hint_label)
             hint_label += 1
-        return "{}\n{}\n{}\n{}".format(top_row, center_row, bottom_row, hint_row)
+        return "{}\n{}\n{}\n{}".format(
+            top_row, center_row, bottom_row, hint_row
+        )
+        
+    def gameResult(self, player_list):
+        #not just sorting here by design as there can be multiple winners
+        winners = []
+        winning_score = -1
+        for p in player_list:
+            if winning_score < 0:
+                winners.append(p)
+                winning_score = p.score
+            elif p.score == winning_score:
+                winners.append(p)
+            elif p.score < winning_score:
+                winners = [p]
+                winning_score = p.score
+        
+        if len(winners) > 1:
+            print ("{} are the winners! Congratulations!".format(
+                ", ".join((p.name) for p in winners)
+            ))
+        else:
+            print("{} is the winner! Congratulations!".format(
+                winners[0].name
+            ))
+            
+    def formatStandings(self, player_list):
+        rating = sorted(player_list, key=lambda pl: pl.score)
+        print("Standings:\n")
+        for player in rating:
+            print("{}: {} points".format(player.name, player.score))
