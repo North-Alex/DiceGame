@@ -43,6 +43,9 @@ class GameEngine:
             self.playRound(round, player_list)
             #first player starts last next round
             player_list = player_list[1:] + [player_list[0]]
+        #display the winner and scores at the end
+        UserIO().gameResult(player_list)
+        quit()
             
     def playRound(self, round_idx, player_list):
         print("\nStarting round {}. " \
@@ -52,10 +55,8 @@ class GameEngine:
             player_selection = self.playTurn(p.name, []) 
             #print("you scored {}".format(scoreDice(player_selection)))
             p.addScore(self.scoreDice(player_selection))
-        print("\nRound {} finished\n".format(round_idx+1))
-        print ("Standings:")
-        for p in player_list:
-            print("{}: {} points".format(p.name, p.score))
+        print("\n=== Round {} finished ===\n".format(round_idx+1))
+        UserIO().formatStandings(player_list)
             
             
     def playTurn(self, player, dice_selected = []):
@@ -65,7 +66,7 @@ class GameEngine:
         for i in range(GameConfig().DICE_NUMBER-len(dice_selected)):
             roll.append(random.randint(1, GameConfig().DIE_SIZE))
         print(UserIO().formatDice(roll))
-        if player[0:3] == "BOT":
+        if player[0:3].lower() == "bot":
             dice_hold_idx = Bot().pickDice(roll)
             time.sleep(1.5)
             print("\n === {}: I select {}\n".format(player, dice_hold_idx))
