@@ -39,6 +39,7 @@ class GameEngine:
             player_list.append(
                 Player(UserIO().promptPlayerName(i + 1, player_list))
             )
+        random.shuffle(player_list)
         for round in range(GameConfig().ROUNDS):
             self.playRound(round, player_list)
             #first player starts last next round
